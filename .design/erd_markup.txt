@@ -1,0 +1,67 @@
+Table ACCOUNT_TYPE as AC {
+  id int [pk, increment]
+  name varchar
+}
+// Transactional, Savings
+
+Table CURRENCY as C {
+  id int [pk]
+  name varchar
+}
+// You can define your on list
+// of currencies. For now, mine
+// will be only USD and KSH
+
+Table ACCOUNT as A {
+  id int [pk, increment]
+  type int
+  currency int
+  account_number varchar
+  name varchar
+  description varchar
+  balance int
+  min_balance int
+}
+
+Ref: A.type > AC.id
+Ref: A.currency > C.id
+
+Table EXPENSE_TYPE as ET {
+  id int [pk]
+  name varchar
+}
+// Living cost, investment, saving
+
+Table EXPENSE_FREQUENCY as EF {
+  id int [pk]
+  name varchar // Weekly, daily
+  days int 
+}
+
+Table EXPENSE as E {
+  id int [pk]
+  type int
+  name varchar
+  description varchar
+  account int
+  amount int
+  first_date datetime
+  next_date datetime
+  frequency int
+}
+
+Ref: E.type > ET.id
+Ref: E.account > A.id
+Ref: E.frequency > EF.id
+
+Table TRANSACTION as T {
+  id uuid [pk]
+  expense int
+  amount int
+  added_at timestamp
+  transaction_id varchar
+  transaction_time timestamp
+  
+}
+
+Ref: T.expense > E.id
