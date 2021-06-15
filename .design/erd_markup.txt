@@ -47,6 +47,7 @@ Table EXPENSE as E {
   amount int
   first_date datetime
   next_date datetime
+  repeating boolean
   frequency int
 }
 
