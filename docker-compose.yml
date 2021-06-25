@@ -2,32 +2,27 @@ version: '3.9'
 
 services:
   web:
-    build: ./budget_planner
-    command: gunicorn budget_planner.wsgi:application --bind 0.0.0.0:8000 -t 1200 -w 3
-    volumes:
-      - static:/home/budget_planner/budget_planner/staticfiles
-    expose:
-      - "8000"
+    build: .
     env_file:
       - .env
-    depends_on:
-      redis:
-        condition: service_started
+    command: gunicorn budget_planner.wsgi:application --bind 0.0.0.0:8000 -t 1200 -w 3
+    ports:
+      - "8000:8000"
+    volumes:
+      - static:/application/staticfiles
 
   nginx:
-    build: ./nginx
-    volumes:
-      - static:/home/budget_planner/budget_planner/staticfiles
+    image: nginx:1.19.6-alpine
     ports:
-      - 1337:80
+      - 80:80
+      - 443:443
+    restart: "unless-stopped"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - static:/application/static/:ro
     depends_on:
       web:
         condition: service_started
-
-  redis:
-    image: redis:alpine
-    expose:
-      - 6379
 
 volumes:
   static:
