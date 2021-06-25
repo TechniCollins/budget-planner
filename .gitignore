@@ -132,4 +132,4 @@ dmypy.json
 .idea/
 
 # custom ignores
-.env
+.budget_planner_env/
