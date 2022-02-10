@@ -130,6 +130,3 @@ dmypy.json
 
 # IntelliJ
 .idea/
-
-# custom ignores
-.budget_planner_env/

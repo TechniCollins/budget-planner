@@ -1,7 +1,5 @@
 FROM python:3.9.5-slim-buster
 
-MAINTAINER Solera Advisors "technicollins.business@gmail.com"
-
 ENV HOME /root
 ENV APP_HOME /application/
 ENV C_FORCE_ROOT=true
